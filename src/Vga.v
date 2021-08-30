@@ -37,7 +37,7 @@ module Vga(
 
   // Horizontal reset and blank signal
   always @(negedge i_Clk) begin
-    rx <= x == `H_MAX;
+    rx <= x == `H_MAX - 1;
     bx <= x >= `H_VISIBLE_AREA && x < `H_MAX;
   end
 
@@ -54,7 +54,7 @@ module Vga(
   // Vertical reset and blank signal
   always @(negedge i_Clk) begin
     ry <= y == `V_MAX && x == `H_MAX - 1;
-    by <= y >= `V_VISIBLE_AREA && y < `V_MAX;
+    by <= y > `V_VISIBLE_AREA && y <= `V_MAX;
   end
 
   assign o_HSync = (x < `H_PULSE_HEAD) || (x > `H_PULSE_TAIL);
