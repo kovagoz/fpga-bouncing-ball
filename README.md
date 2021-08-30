@@ -2,6 +2,6 @@
 
 Yet another bouncing ball on a VGA screen.
 
-## Horizontal timing
+## Video timing
 
-![blinking LEDs](https://res.cloudinary.com/kovagoz/image/upload/s--hVAL3FkG--/c_scale,w_700/v1630237033/github/fpga_ball_timing.png)
+![blinking LEDs](https://res.cloudinary.com/kovagoz/image/upload/s--BI24V8bJ--/c_scale,w_700/v1630359601/github/fpga_ball_timing.png)
