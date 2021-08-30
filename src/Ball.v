@@ -12,8 +12,8 @@ module Ball(
   output o_Video);
 
   // Initial position of the ball (top left corner is 1,1)
-  parameter p_STARTX = 316;
-  parameter p_STARTY = 100;
+  parameter p_STARTX = `H_VISIBLE_AREA / 2 - `BALL_SIZE / 2 + 1;
+  parameter p_STARTY = `V_VISIBLE_AREA / 2 - `BALL_SIZE / 2 + 1;
 
   reg [9:0] x = `H_VISIBLE_AREA - (`BALL_SIZE - 1) - (p_STARTX - 1);
   reg [8:0] y = `V_VISIBLE_AREA - (`BALL_SIZE - 1) - (p_STARTY - 1);
