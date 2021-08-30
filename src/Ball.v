@@ -54,11 +54,11 @@ module Ball(
   always @(posedge i_Clk) begin
     if (i_VBlank) begin
       // Bottom edge of the screen
-      if (ydir == 1 && y == `V_VISIBLE_AREA)
+      if (ydir == 1 && y == 1)
         ydir <= 0;
 
       // Top edge of the screen
-      if (ydir == 0 && y == `V_VISIBLE_AREA - `BALL_SIZE)
+      if (ydir == 0 && y == `V_VISIBLE_AREA - `BALL_SIZE + 1)
         ydir <= 1;
     end
   end
