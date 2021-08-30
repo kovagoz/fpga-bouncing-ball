@@ -15,6 +15,7 @@ module Ball(
   parameter p_STARTX = `H_VISIBLE_AREA / 2 - `BALL_SIZE / 2 + 1;
   parameter p_STARTY = `V_VISIBLE_AREA / 2 - `BALL_SIZE / 2 + 1;
 
+  // Current position of the ball (not the screen coordinates)
   reg [9:0] x = `H_VISIBLE_AREA - (`BALL_SIZE - 1) - (p_STARTX - 1);
   reg [8:0] y = `V_VISIBLE_AREA - (`BALL_SIZE - 1) - (p_STARTY - 1);
 
@@ -23,11 +24,13 @@ module Ball(
   // Moving ball horizontally
   always @(posedge i_Clk) begin
     if (~i_HBlank || i_VReset) begin
+      // Move the ball one pixel over
       if (i_VReset && i_XDir) begin
         if (x == 1)
           x <= `H_VISIBLE_AREA;
         else
           x <= x - 1;
+      // Generate static signal
       end else if (x == `H_VISIBLE_AREA)
         x <= 1;
       else
@@ -38,11 +41,13 @@ module Ball(
   // Moving ball vertically
   always @(posedge i_Clk) begin
     if (~i_VBlank && i_HReset || i_VReset) begin
+      // Move the ball one line over
       if (i_VReset && ydir) begin
         if (y == 1)
           y <= `V_VISIBLE_AREA;
         else
           y <= y - 1;
+      // Generate static signal
       end else if (y == `V_VISIBLE_AREA)
         y <= 1;
       else

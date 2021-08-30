@@ -17,6 +17,7 @@ module Vga(
 
   output o_Video);
 
+  // Initial position of the H/V counters (useful for testing)
   parameter p_HPOS = 1;
   parameter p_VPOS = 1;
 

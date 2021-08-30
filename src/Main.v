@@ -28,16 +28,12 @@ module Main(
   Vga vga(
     .i_Clk(i_Clk),
     .i_Video(w_Video_Ball),
-
     .o_HSync(o_VGA_HSync),
     .o_VSync(o_VGA_VSync),
-
     .o_HBlank(w_HBlank),
     .o_VBlank(w_VBlank),
-
     .o_HReset(w_HReset),
     .o_VReset(w_VReset),
-
     .o_Video(w_Video)
   );
 
