@@ -1,7 +1,5 @@
 `include "VgaTiming.v"
 
-`define BALL_SIZE 10
-
 module Ball(
   input  i_Clk,
   input  i_HBlank,
@@ -11,13 +9,15 @@ module Ball(
   input  i_XDir,
   output o_Video);
 
+  parameter p_BALL_SIZE = 10;
+
   // Initial position of the ball (top left corner is 1,1)
-  parameter p_STARTX = `H_VISIBLE_AREA / 2 - `BALL_SIZE / 2 + 1;
-  parameter p_STARTY = `V_VISIBLE_AREA / 2 - `BALL_SIZE / 2 + 1;
+  parameter p_STARTX    = `H_VISIBLE_AREA / 2 - p_BALL_SIZE / 2 + 1;
+  parameter p_STARTY    = `V_VISIBLE_AREA / 2 - p_BALL_SIZE / 2 + 1;
 
   // Current position of the ball (not the screen coordinates)
-  reg [9:0] x = `H_VISIBLE_AREA - (`BALL_SIZE - 1) - (p_STARTX - 1);
-  reg [8:0] y = `V_VISIBLE_AREA - (`BALL_SIZE - 1) - (p_STARTY - 1);
+  reg [9:0] x = `H_VISIBLE_AREA - (p_BALL_SIZE - 1) - (p_STARTX - 1);
+  reg [8:0] y = `V_VISIBLE_AREA - (p_BALL_SIZE - 1) - (p_STARTY - 1);
 
   reg ydir = 1;
 
@@ -63,12 +63,12 @@ module Ball(
         ydir <= 0;
 
       // Top edge of the screen
-      if (ydir == 0 && y == `V_VISIBLE_AREA - `BALL_SIZE + 1)
+      if (ydir == 0 && y == `V_VISIBLE_AREA - p_BALL_SIZE + 1)
         ydir <= 1;
     end
   end
 
-  assign o_Video = x <= `H_VISIBLE_AREA && x > `H_VISIBLE_AREA - `BALL_SIZE
-                && y <= `V_VISIBLE_AREA && y > `V_VISIBLE_AREA - `BALL_SIZE;
+  assign o_Video = x <= `H_VISIBLE_AREA && x > `H_VISIBLE_AREA - p_BALL_SIZE
+                && y <= `V_VISIBLE_AREA && y > `V_VISIBLE_AREA - p_BALL_SIZE;
 
 endmodule
