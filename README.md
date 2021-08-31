@@ -2,8 +2,8 @@
 
 Yet another bouncing ball on a VGA screen.
 
-In this version, Ball and HitCounter gets only a couple of 1bit signals instead of the two 10bit position wire.
-This solution uses significantly less wires than the other one.
+In this version, Ball and HitCounter gets only a couple of 1bit signals instead of the two 10bit position wires.
+This solution uses significantly less wires than the previous one.
 
 ## Stats
 
