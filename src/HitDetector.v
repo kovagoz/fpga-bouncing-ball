@@ -5,6 +5,7 @@ module HitDetector(
   input  i_HReset,
   input  i_HBlank,
   input  i_Ball,
+  input  i_Paddle0,
   output o_XDir);
 
   reg       xdir = 0;
@@ -19,8 +20,8 @@ module HitDetector(
 
   always @(negedge i_Clk) begin
     if (i_Ball) begin
-      // Hit the left edge of the screen
-      if (xdir == 0 && dx == 1)
+      // Hit the left edge of the screen or left paddle
+      if (xdir == 0 && (dx == 1 || i_Paddle0))
         xdir <= 1;
 
       // Hit the right edge of the screen
