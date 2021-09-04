@@ -12,8 +12,8 @@ module Ball(
   parameter p_BALL_SIZE = 10;
 
   // Initial position of the ball (top left corner is 1,1)
-  parameter p_STARTX    = `H_VISIBLE_AREA / 2 - p_BALL_SIZE / 2 + 1;
-  parameter p_STARTY    = `V_VISIBLE_AREA / 2 - p_BALL_SIZE / 2 + 1;
+  parameter p_STARTX = `H_VISIBLE_AREA / 2 - p_BALL_SIZE / 2 + 1;
+  parameter p_STARTY = `V_VISIBLE_AREA / 2 - p_BALL_SIZE / 2 + 1;
 
   // Current position of the ball (not the screen coordinates)
   reg [9:0] x = `H_VISIBLE_AREA - (p_BALL_SIZE - 1) - (p_STARTX - 1);
