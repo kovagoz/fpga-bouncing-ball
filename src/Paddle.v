@@ -1,3 +1,6 @@
+`ifndef PADDLE_V
+`define PADDLE_V
+
 `include "VgaTiming.v"
 
 `define PADDLE_WIDTH  10
@@ -6,17 +9,21 @@
 module Paddle(
   input  i_Clk,
   input  i_HReset,
+  input  i_VReset,
   input  i_HBlank,
   input  i_VBlank,
+  input  i_Enabled,
   output o_Video);
 
-  // Initial position relative to the top left corner
-  parameter p_STARTX = 40;
-  parameter p_STARTY = 200;
+  // Position relative to the left edge of the screen
+  parameter p_XPOS = 40;
 
-  reg [9:0] x = `H_VISIBLE_AREA - (`PADDLE_WIDTH - 1) - (p_STARTX - 1);
-  reg [8:0] y = `V_VISIBLE_AREA - (`PADDLE_HEIGHT - 1) - (p_STARTY - 1);
+  reg [9:0] x = `H_VISIBLE_AREA - (`PADDLE_WIDTH - 1) - (p_XPOS - 1);
 
+  // Paddle is drawn on the screen as long as this counter is running.
+  reg [5:0] y = 0;
+
+  // Generate signal for the horizontal extent
   always @(posedge i_Clk) begin
     if (~i_HBlank) begin
       if (x == `H_VISIBLE_AREA)
@@ -26,16 +33,21 @@ module Paddle(
     end
   end
 
+  // Increment the counter only if the enabled signal (received from the
+  // paddle control modul) is high.
   always @(posedge i_Clk) begin
-    if (~i_VBlank && i_HReset) begin
-      if (y == `V_VISIBLE_AREA)
-        y <= 1;
-      else
-        y <= y + 1;
+    if (i_Enabled && ~i_VBlank && i_HReset && y < `PADDLE_HEIGHT) begin
+      y <= y + 1;
     end
+
+    if (i_VReset)
+      y <= 0;
   end
 
-  assign o_Video = x > `H_VISIBLE_AREA - `PADDLE_WIDTH
-                && y > `V_VISIBLE_AREA - `PADDLE_HEIGHT;
+  assign o_Video = i_Enabled
+                && x > `H_VISIBLE_AREA - `PADDLE_WIDTH
+                && y < `PADDLE_HEIGHT;
 
 endmodule
+
+`endif

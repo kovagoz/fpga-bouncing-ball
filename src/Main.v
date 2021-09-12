@@ -2,9 +2,12 @@
 `include "Ball.v"
 `include "HitDetector.v"
 `include "Paddle.v"
+`include "PaddleControl.v"
 
 module Main(
   input i_Clk,
+  input i_Switch_1,
+  input i_Switch_2,
 
   output o_VGA_HSync,
   output o_VGA_VSync,
@@ -25,6 +28,7 @@ module Main(
   wire w_HReset, w_VReset;
   wire w_Video, w_Video_Ball, w_Video_Paddle0;
   wire w_XDir;
+  wire w_Ctrl0;
 
   Vga vga(
     .i_Clk(i_Clk),
@@ -60,9 +64,21 @@ module Main(
   Paddle paddle0(
     .i_Clk(i_Clk),
     .i_HReset(w_HReset),
+    .i_VReset(w_VReset),
     .i_HBlank(w_HBlank),
     .i_VBlank(w_VBlank),
+    .i_Enabled(w_Ctrl0),
     .o_Video(w_Video_Paddle0)
+  );
+
+  PaddleControl ctrl0(
+    .i_Clk(i_Clk),
+    .i_Button_Up(i_Switch_1),
+    .i_Button_Down(i_Switch_2),
+    .i_VBlank(w_VBlank),
+    .i_HReset(w_HReset),
+    .i_VReset(w_VReset),
+    .o_Enabled(w_Ctrl0)
   );
 
   assign o_VGA_Red_0 = w_Video;
